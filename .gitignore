@@ -1,0 +1,8 @@
+.*
+!.gitignore
+*~
+/dirlist
+/dirlist.save
+/dirlist.rel
+/dirlist.tmp
+/dirlist.hash
