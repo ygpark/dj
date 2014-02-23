@@ -11,16 +11,20 @@
 ## setting for the linux terminal
 #CTRL+UP ,CTRL+LEFT, CTRL+RIGHT
 bind '"\e[1;5A":"dj_ctrl_up\C-m"' 2> /dev/null
-bind '"\e[1;5D":"dj_ctrl_left\C-m"' 2> /dev/null
-bind '"\e[1;5C":"dj_ctrl_right\C-m"' 2> /dev/null
 bind '"\e[1;5B":"dj_ctrl_down\C-m"' 2> /dev/null
+bind '"\e[1;5C":"dj_ctrl_right\C-m"' 2> /dev/null
+bind '"\e[1;5D":"dj_ctrl_left\C-m"' 2> /dev/null
+
+
 
 ## setting for the putty
 #CTRL+UP ,CTRL+LEFT, CTRL+RIGHT
 bind '"\eOA":"dj_ctrl_up\C-m"' 2> /dev/null
-bind '"\eOD":"dj_ctrl_left\C-m"' 2> /dev/null
+bind '"\eOB":"dj_ctrl_down\C-m"'  2> /dev/null
 bind '"\eOC":"dj_ctrl_right\C-m"'  2> /dev/null
- 
+bind '"\eOD":"dj_ctrl_left\C-m"' 2> /dev/null
+
+
 export DJ_FNAME_ABS=$HOME/.dj/dirlist
 export DJ_FNAME_REL=$HOME/.dj/dirlist.rel
 export DJ_FNAME_TEMP=$HOME/.dj/dirlist.tmp
