@@ -30,21 +30,6 @@ export DJ_FNAME_STACK=$HOME/.dj/dirlist.stack
 export DJ_HOME=$(echo $HOME | sed 's/\//\\\//g')
 
 #######################################
-# migration area
-#######################################
-#function dj_migration
-#{
-#    echo $DJ_VERSION
-#    if [[ "$DJ_VERSION" == "v1.0" ]]
-#    then
-#        cp $DJ_FNAME_ABS $DJ_FNAME_TEMP
-#        sed -i "s/^~/$HOME/" $DJ_FNAME_TEMP
-#    fi
-#}
-#
-#dj_migration
-
-#######################################
 function dj_ctrl_up
 {
     # clear stack
