@@ -29,7 +29,8 @@ export DJ_FNAME_SAVE=$HOME/.dj/dirlist.save
 export DJ_FNAME_STACK=$HOME/.dj/dirlist.stack
 export DJ_HOME=$(echo $HOME | sed 's/\//\\\//g')
 
-#######################################################################################
+# Brief: Print usage
+# Usage: dj_print_usage
 function dj_print_usage
 {
     echo "dj - Directory Jump";
@@ -57,8 +58,9 @@ function dj_print_usage
     echo "       CTRL + LEFT        : change previous directory and display ";
     echo "       CTRL + RIGHT       : change next directory and display";
 }
-#######################################################################################
 
+# Brief:
+# Usage: dj_ctrl_up
 function dj_ctrl_up
 {
     # clear stack
@@ -77,6 +79,8 @@ function dj_ctrl_up
     history -d $(($HISTCMD-1));
 }
 
+# Brief:
+# Usage: dj_ctrl_down
 function dj_ctrl_down
 {
     # clear stack
@@ -95,6 +99,8 @@ function dj_ctrl_down
     history -d $(($HISTCMD-1));
 }
 
+# Brief:
+# Usage: dj_ctrl_left
 function dj_ctrl_left
 {
     is_direct_line=0;
@@ -126,6 +132,8 @@ function dj_ctrl_left
     history -d $(($HISTCMD-1));
 }
 
+# Brief:
+# Usage: dj_ctrl_right
 function dj_ctrl_right
 {
     clear;
@@ -156,7 +164,8 @@ function dj_ctrl_right
 }
 
 
-# Brief: 
+# Brief: Push a current directory into stack
+# Usage: dj_push_dir_into_stack
 function dj_push_dir_into_stack
 {
     if [ -e $DJ_FNAME_STACK ] \
@@ -168,12 +177,16 @@ function dj_push_dir_into_stack
     fi
 }
 
+# Brief: Pop a last directory from stack
+# Usage: dj_pop_dir_from_stack
 function dj_pop_dir_from_stack
 {
     [ -e $DJ_FNAME_STACK ] && sed -i '$ d' $DJ_FNAME_STACK;
     ! [ -s $DJ_FNAME_STACK ] && rm $DJ_FNAME_STACK;
 }
 
+# Brief: Remove directories that is not exist
+# Usage: dj_reload_only_exist_dir
 function dj_reload_only_exist_dir
 {
     rm -f $DJ_FNAME_TEMP && touch $DJ_FNAME_TEMP;
@@ -188,6 +201,8 @@ function dj_reload_only_exist_dir
     mv $DJ_FNAME_TEMP $DJ_FNAME_ABS;
 }
 
+# Brief: Display directory list
+# Usage: dj_dirs
 function dj_dirs
 {
     LINE_COUNT=$(wc -l $DJ_FNAME_ABS | awk '{print $1}');
@@ -215,6 +230,8 @@ function dj_dirs
     echo;
 }
 
+# Brief:
+# Usage:
 function dj_add
 {
     # Check param
@@ -232,17 +249,21 @@ function dj_add
     return;
 }
 
+# Brief:
+# Usage:
 function dj_clean
 {
-    rm -f $DJ_FNAME_ABS;
-    touch $DJ_FNAME_ABS;
+    rm -f $DJ_FNAME_ABS && touch $DJ_FNAME_ABS;
 }
 
 # Brief: Save a directory list to the filepath.
 # Usage: dj_save <filepath>
 function dj_save
 {
+    # error handling
+    [ "$#" = 0 ] && return 0;
     dj_reload_only_exist_dir;
+
     cp $DJ_FNAME_ABS $1;
 }
 
@@ -250,9 +271,13 @@ function dj_save
 # Usage: dj_load <filepath>
 function dj_load
 {
+    # error handling
+    [ "$#" = 0 ] && return 0;
+
     cp $1 $DJ_FNAME_ABS;
+
+    # error handling
     dj_reload_only_exist_dir;
-    return 0;
 }
 
 # Brief: Remove a directory.
@@ -285,8 +310,7 @@ function dj_rm
 
 function dj_rm_by_dirname
 {
-    rm -f $DJ_FNAME_TEMP;
-    touch $DJ_FNAME_TEMP;
+    rm -f $DJ_FNAME_TEMP && touch $DJ_FNAME_TEMP;
 
     while read line;
     do
@@ -358,6 +382,8 @@ function dj_prev
     return 0;
 }
 
+# Brief: Change a current directory using index
+# Usage: dj_go <index>
 function dj_go
 {
     # Check argument whether number.
@@ -366,8 +392,10 @@ function dj_go
         return;
     fi
 
+    # get directory by index
     DJ_TARGET=$(cat -n $DJ_FNAME_ABS | grep "^[[:space:]]*$1[[:space:]]" | awk '{print $2}');
 
+    # go
     ! [ -z $DJ_TARGET ] && cd $DJ_TARGET;
 }
 
