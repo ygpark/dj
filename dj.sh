@@ -45,7 +45,7 @@ function dj_print_usage
     echo "    dj save <filename> : save dir list into the file";
     echo "    dj load <filename> : load dir list from the file";
     echo "    dj clean           : clean the stack";
-    echo "    dj help          : print usage";
+    echo "    dj help            : print usage";
     echo;
     echo "Key Map:";
     echo "       CTRL + UP          : display stored directoris";
