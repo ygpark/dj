@@ -122,8 +122,8 @@ function dj_ctrl_left
     # print current dir
     echo    "[ Directory Jump ]";
     echo;
-    echo    "    TOP: `head -n1 $DJ_FNAME_STACK`";
-    echo -e "    PWD: \033[7m$PWD\033[27m";
+    echo -e "    TOP: \033[7m`head -n1 $DJ_FNAME_STACK`\033[27m";
+    echo    "    PWD: $PWD";
     echo;
     echo    "(See 'dj help' for for information)";
     echo;
@@ -150,11 +150,11 @@ function dj_ctrl_right
     echo "[ Directory Jump ]";
     echo;
     if [ -e $DJ_FNAME_STACK ]; then
-        echo "    TOP: `head -n1 $DJ_FNAME_STACK`";
+        echo -e "    TOP: \033[7m`head -n1 $DJ_FNAME_STACK`\033[27m";
     else
-        echo "    TOP: $PWD";
+        echo -e "    TOP: \033[7m$PWD\033[27m";
     fi
-    echo -e "    PWD: \033[7m$PWD\033[27m";
+    echo "    PWD: $PWD";
     echo;
     echo "(See 'dj help' for for information)";
     echo;
