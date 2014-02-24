@@ -48,9 +48,10 @@ function dj_print_usage
     echo "    dj help            : print usage";
     echo;
     echo "Key Map:";
-    echo "       CTRL + UP          : display stored directoris";
-    echo "       CTRL + LEFT        : change previous directory and display ";
-    echo "       CTRL + RIGHT       : change next directory and display";
+    echo "       CTRL + UP       : move previous";
+    echo "       CTRL + DOWN     : move next";
+    echo "       CTRL + LEFT     : jump down";
+    echo "       CTRL + RIGHT    : jump up";
 }
 
 # Brief:
