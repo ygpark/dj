@@ -193,7 +193,7 @@ function dj_reload_only_exist_dir
         fi
     done < <(cat $DJ_FNAME_ABS)
 
-    mv $DJ_FNAME_TEMP $DJ_FNAME_ABS;
+    mv -f $DJ_FNAME_TEMP $DJ_FNAME_ABS;
 }
 
 # Brief: Display directory list
@@ -239,7 +239,7 @@ function dj_add
     dj_reload_only_exist_dir;
 
     sort -u $DJ_FNAME_ABS -o $DJ_FNAME_TEMP;
-    mv $DJ_FNAME_TEMP $DJ_FNAME_ABS;
+    mv -f $DJ_FNAME_TEMP $DJ_FNAME_ABS;
 
     return;
 }
@@ -298,7 +298,7 @@ function dj_rm
         [ "$index" -ne "$1" ] && echo $directory >> $DJ_FNAME_TEMP;
     done < <(cat -n $DJ_FNAME_ABS)
 
-    mv $DJ_FNAME_TEMP $DJ_FNAME_ABS;
+    mv -f $DJ_FNAME_TEMP $DJ_FNAME_ABS;
 
     return 0;
 }
@@ -314,7 +314,7 @@ function dj_rm_by_dirname
         fi
     done < <(cat $DJ_FNAME_ABS)
 
-    mv $DJ_FNAME_TEMP $DJ_FNAME_ABS;
+    mv -f $DJ_FNAME_TEMP $DJ_FNAME_ABS;
 }
 
 
