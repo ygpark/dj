@@ -1,6 +1,7 @@
 # Directory Jump
 
 Use The `Directory Jump` script to save your time to change directory.
+DJ is available for `Linux`, `OS X`
 
 # Introduction Video
 
