@@ -7,21 +7,34 @@
 #   - 2013-07-02 (v0.1): first release 
 #   - 2013-10-09 (v0.2): speed optimization
 #   - 2014-02-23 (v0.3): refactoring & update display & keymap
+#   - 2014-02-28 (v0.4): support putty + screen environment
+#
+
+#
+# If you are looking for the other key binding, you can use 'cat >/dev/null'
+# command and press any key combinations.
 #
 
 ## setting for the linux terminal
-#CTRL+UP ,CTRL+LEFT, CTRL+RIGHT
+# CTRL + Up/Down/Right/Left Arrow
 bind '"\e[1;5A":"dj_ctrl_up\C-m"' 2> /dev/null
 bind '"\e[1;5B":"dj_ctrl_down\C-m"' 2> /dev/null
 bind '"\e[1;5C":"dj_ctrl_right\C-m"' 2> /dev/null
 bind '"\e[1;5D":"dj_ctrl_left\C-m"' 2> /dev/null
 
 ## setting for the putty
-#CTRL+UP ,CTRL+LEFT, CTRL+RIGHT
+# CTRL + Up/Down/Right/Left Arrow
 bind '"\eOA":"dj_ctrl_up\C-m"' 2> /dev/null
 bind '"\eOB":"dj_ctrl_down\C-m"'  2> /dev/null
 bind '"\eOC":"dj_ctrl_right\C-m"'  2> /dev/null
 bind '"\eOD":"dj_ctrl_left\C-m"' 2> /dev/null
+
+## setting for the screen in the putty
+# ALT + Up/Down/Right/Left Arrow
+bind '"\e\e[A":"dj_ctrl_up\C-m"' 2> /dev/null
+bind '"\e\e[B":"dj_ctrl_down\C-m"'  2> /dev/null
+bind '"\e\e[C":"dj_ctrl_right\C-m"'  2> /dev/null
+bind '"\e\e[D":"dj_ctrl_left\C-m"' 2> /dev/null
 
 export DJ_FNAME_ABS=$HOME/.dj/dirlist
 export DJ_FNAME_TEMP=$HOME/.dj/dirlist.tmp
@@ -47,11 +60,18 @@ function dj_print_usage
     echo "    dj clean           : clean the stack";
     echo "    dj help            : print usage";
     echo;
-    echo "Key Map:";
-    echo "       CTRL + UP       : move previous";
-    echo "       CTRL + DOWN     : move next";
-    echo "       CTRL + LEFT     : jump down";
-    echo "       CTRL + RIGHT    : jump up";
+    echo "Key Map (normal):";
+    echo "    CTRL + Up Arrow       : move previous";
+    echo "    CTRL + Down Arrow     : move next";
+    echo "    CTRL + Left Arrow     : jump down";
+    echo "    CTRL + Right Arrow    : jump up";
+    echo;
+    echo "Key Map (putty + screen):";
+    echo "    ALT + Up Arrow       : move previous";
+    echo "    ALT + Down Arrow     : move next";
+    echo "    ALT + Left Arrow     : jump down";
+    echo "    ALT + Right Arrow    : jump up";
+    echo;
 }
 
 # Brief:
