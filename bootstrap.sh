@@ -3,10 +3,13 @@
 ############################  SETUP PARAMETERS
 app_name='dj'
 bashrc_include='dj.sh'
+bashrc='.bashrc'
+if ! [ $(uname -a | awk '{print $1}') = "Linux" ];then
+	bashrc='.bash_profile'
+fi
 git_uri='https://github.com/ygpark/dj'
 git_branch='master'
 debug_mode='1'
-
 ############################  BASIC SETUP TOOLS
 msg() {
     printf '%b\n' "$1" >&2
@@ -90,14 +93,14 @@ clone_repo() {
 
 setup_bashrc() {
 
-    is_include_exist_in_bashrc=$(grep "source ~/.$app_name/$bashrc_include" $HOME/.bashrc | wc -l)
+    is_include_exist_in_bashrc=$(grep "source ~/.$app_name/$bashrc_include" $HOME/$bashrc | wc -l)
     no="0"
 
     # .bashrc에 추가하기
-    if [[ $is_include_exist_in_bashrc == $no ]]
-    then
-        echo "" >> ~/.bashrc
-        echo "source ~/.$app_name/$bashrc_include" >> ~/.bashrc
+    if [ $is_include_exist_in_bashrc = $no ]; then
+        echo "" >> $HOME/$bashrc
+        echo "source ~/.$app_name/$bashrc_include" >> $HOME/$bashrc
+        echo "source ~/.$app_name/$bashrc_include"
         ret="$?"
         success "$1"
         debug
@@ -106,10 +109,6 @@ setup_bashrc() {
         success "$1"
         debug
     fi
-}
-
-source_bashrc() {
-    [[ -e $HOME/.bashrc ]] && source $HOME/.bashrc
 }
 
 ############################ SPECIAL FUNCTIONS
