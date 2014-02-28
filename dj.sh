@@ -2,12 +2,13 @@
 # filename      : dj.sh
 # DESCRIPTION   : Directory Jump
 # AUTHOR        : Young-gi Park <ghostyak@gmail.com>
-# VERSION       : v0.3
+# VERSION       : v0.5
 # HISTORY       : 
 #   - 2013-07-02 (v0.1): first release 
 #   - 2013-10-09 (v0.2): speed optimization
 #   - 2014-02-23 (v0.3): refactoring & update display & keymap
 #   - 2014-02-28 (v0.4): support putty + screen environment
+#   - 2014-03-01 (v0.5): support mac os
 #
 
 #
@@ -72,6 +73,12 @@ function dj_print_usage
     echo "    ALT + Down Arrow     : move next";
     echo "    ALT + Left Arrow     : jump down";
     echo "    ALT + Right Arrow    : jump up";
+    echo;
+    echo "Key Map (mac os):";
+    echo "    ESC + Up Arrow       : move previous";
+    echo "    ESC + Down Arrow     : move next";
+    echo "    ESC + Left Arrow     : jump down";
+    echo "    ESC + Right Arrow    : jump up";
     echo;
 }
 
