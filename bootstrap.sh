@@ -4,6 +4,7 @@
 app_name='dj'
 bashrc_include='dj.sh'
 bashrc='.bashrc'
+# Linux or Darwin?(MAC OS X)
 if ! [ $(uname -a | awk '{print $1}') = "Linux" ];then
 	bashrc='.bash_profile'
 fi
