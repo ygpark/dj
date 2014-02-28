@@ -36,11 +36,12 @@ bind '"\e\e[B":"dj_ctrl_down\C-m"'  2> /dev/null
 bind '"\e\e[C":"dj_ctrl_right\C-m"'  2> /dev/null
 bind '"\e\e[D":"dj_ctrl_left\C-m"' 2> /dev/null
 
-export DJ_FNAME_ABS=$HOME/.dj/dirlist
-export DJ_FNAME_TEMP=$HOME/.dj/dirlist.tmp
-export DJ_FNAME_SAVE=$HOME/.dj/dirlist.save
-export DJ_FNAME_STACK=$HOME/.dj/dirlist.stack
-export DJ_HOME=$(echo $HOME | sed 's/\//\\\//g')
+export DJ_HOME=$HOME/.dj/
+export DJ_FNAME_ABS=$DJ_HOME/dirlist
+export DJ_FNAME_TEMP=$DJ_HOME/dirlist.tmp
+export DJ_FNAME_SAVE=$DJ_HOME/dirlist.save
+export DJ_FNAME_STACK=$DJ_HOME/dirlist.stack
+export DJ_READLINK=$HOME/.dj/readlink.sh
 
 # Brief: Print usage
 # Usage: dj_print_usage
@@ -196,8 +197,14 @@ function dj_push_dir_into_stack
 # Usage: dj_pop_dir_from_stack
 function dj_pop_dir_from_stack
 {
-    [ -e $DJ_FNAME_STACK ] && sed -i '$ d' $DJ_FNAME_STACK;
-    ! [ -s $DJ_FNAME_STACK ] && rm $DJ_FNAME_STACK;
+    # delete last line at $DJ_FNAME_STACK
+    if [ -e $DJ_FNAME_STACK ];then
+        sed -itmp '$ d' $DJ_FNAME_STACK
+        rm -f $DJ_FNAME_STACK"tmp"
+    fi
+
+    # if file size 0 then delete $DJ_FNAME_STACK file
+    ! [ -s $DJ_FNAME_STACK ] && rm -f $DJ_FNAME_STACK;
 }
 
 # Brief: Remove directories that is not exist
@@ -255,7 +262,7 @@ function dj_add
         return 1;
     fi
 
-    echo $(readlink -f $1) >> $DJ_FNAME_ABS;
+    echo $($DJ_READLINK $1) >> $DJ_FNAME_ABS;
     dj_reload_only_exist_dir;
 
     sort -u $DJ_FNAME_ABS -o $DJ_FNAME_TEMP;
@@ -329,7 +336,7 @@ function dj_rm_by_dirname
 
     while read line;
     do
-        if [[ ! "$line" == "$(readlink -f $1)" ]]; then
+        if [[ ! "$line" == "$($DJ_READLINK $1)" ]]; then
             echo "$line" >> $DJ_FNAME_TEMP;
         fi
     done < <(cat $DJ_FNAME_ABS)
