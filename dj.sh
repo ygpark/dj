@@ -307,7 +307,7 @@ function dj_load
 function dj_rm
 {
     # Check argument whether number.
-    if [ ! $(echo $1 | sed -n '/^[0-9]\+$/p') ]; then
+    if [ ! $(echo $1 | sed -n '/^[0-9][0-9]*$/p') ]; then
         echo "error: Input number" 1>&2
         dj_print_usage;
         return;
@@ -409,7 +409,7 @@ function dj_prev
 function dj_go
 {
     # Check argument whether number.
-    if [ ! $(echo $1 | sed -n '/^[0-9]\+$/p') ]; then
+    if [ ! $(echo $1 | sed -n '/^[0-9][0-9]*$/p') ]; then
         dj_print_usage;
         return;
     fi
