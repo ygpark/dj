@@ -126,7 +126,7 @@ clone_repo      "Successfully cloned $app_name"
 
 setup_bashrc "Successfully setup for '$HOME/.bashrc'"
 
-msg             "\n * Type 'source $HOME/.bashrc' to finish the installation."
+msg             "\n * Type 'source $HOME/$bashrc' to finish the installation."
 msg             " * Or installation is applied since next terminal."
 
 msg             "\nThanks for installing $app_name."
