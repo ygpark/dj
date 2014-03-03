@@ -124,7 +124,7 @@ do_backup   "Your old git stuff has a suffix now and looks like $HOME/.$app_name
 
 clone_repo      "Successfully cloned $app_name"
 
-setup_bashrc "Successfully setup for '$HOME/.bashrc'"
+setup_bashrc "Successfully setup for '$HOME/$bashrc'"
 
 msg             "\n * Type 'source $HOME/$bashrc' to finish the installation."
 msg             " * Or installation is applied since next terminal."
