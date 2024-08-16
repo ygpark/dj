@@ -59,13 +59,11 @@ class DirectoryJump:
                 print(f"    \033[7m{i} {directory}\033[27m")
             else:
                 print(f"    {i} {directory}")
-        
-        print("\n(See 'dj help' for more information)\n")
 
     def add(self, directory="."):
         full_path = os.path.abspath(directory)
         if not os.path.isdir(full_path):
-            print(f"error: Invalid directory '{directory}'", file=sys.stderr)
+            print(f"Error: Invalid directory '{directory}'", file=sys.stderr)
             return 1
 
         with open(self.dir_list_file, 'a') as f:
@@ -80,17 +78,21 @@ class DirectoryJump:
             f.writelines(directories)
         
         shutil.move(self.temp_file, self.dir_list_file)
+        print(f"Added directory: {full_path}")
 
     def clean(self):
         open(self.dir_list_file, 'w').close()
+        print("Directory list has been cleared.")
 
     def save(self, filename):
         self.reload_only_exist_dir()
         shutil.copy(self.dir_list_file, filename)
+        print(f"Directory list saved to: {filename}")
 
     def load(self, filename):
         shutil.copy(filename, self.dir_list_file)
         self.reload_only_exist_dir()
+        print(f"Directory list loaded from: {filename}")
 
     def rm(self, index=None):
         if index is None:
@@ -99,7 +101,7 @@ class DirectoryJump:
             try:
                 index = int(index)
             except ValueError:
-                print("error: Input number", file=sys.stderr)
+                print("Error: Input must be a number", file=sys.stderr)
                 self.print_usage()
                 return
 
@@ -108,24 +110,29 @@ class DirectoryJump:
                 directories = f.readlines()
             
             if 1 <= index <= len(directories):
+                removed_dir = directories[index - 1].strip()
                 del directories[index - 1]
                 with open(self.temp_file, 'w') as f:
                     f.writelines(directories)
                 shutil.move(self.temp_file, self.dir_list_file)
+                print(f"Removed directory: {removed_dir}")
             else:
-                print(f"error: Invalid index {index}", file=sys.stderr)
+                print(f"Error: Invalid index {index}", file=sys.stderr)
 
     def rm_by_dirname(self, directory):
         full_path = os.path.abspath(directory)
         with open(self.dir_list_file, 'r') as f:
             directories = f.readlines()
         
-        directories = [d for d in directories if d.strip() != full_path]
+        new_directories = [d for d in directories if d.strip() != full_path]
         
-        with open(self.temp_file, 'w') as f:
-            f.writelines(directories)
-        
-        shutil.move(self.temp_file, self.dir_list_file)
+        if len(new_directories) < len(directories):
+            with open(self.temp_file, 'w') as f:
+                f.writelines(new_directories)
+            shutil.move(self.temp_file, self.dir_list_file)
+            print(f"Removed directory: {full_path}")
+        else:
+            print(f"Directory not found in the list: {full_path}")
 
     def next(self):
         self.reload_only_exist_dir()
@@ -137,6 +144,7 @@ class DirectoryJump:
             current_index = directories.index(current_dir + '\n')
             next_index = (current_index + 1) % len(directories)
             next_dir = directories[next_index].strip()
+            print(f"Changing to next directory: {next_dir}")
             print(f"DJCHANGEDIR:{next_dir}")
         except ValueError:
             print("Current directory not in the list.")
@@ -151,6 +159,7 @@ class DirectoryJump:
             current_index = directories.index(current_dir + '\n')
             prev_index = (current_index - 1) % len(directories)
             prev_dir = directories[prev_index].strip()
+            print(f"Changing to previous directory: {prev_dir}")
             print(f"DJCHANGEDIR:{prev_dir}")
         except ValueError:
             print("Current directory not in the list.")
@@ -159,6 +168,7 @@ class DirectoryJump:
         try:
             index = int(index)
         except ValueError:
+            print("Error: Invalid input. Please provide a number.")
             self.print_usage()
             return
 
@@ -168,9 +178,10 @@ class DirectoryJump:
         
         if 1 <= index <= len(directories):
             target_dir = directories[index - 1].strip()
+            print(f"Changing directory to: {target_dir}")
             print(f"DJCHANGEDIR:{target_dir}")
         else:
-            print(f"error: Invalid index {index}", file=sys.stderr)
+            print(f"Error: Invalid index {index}")
 
     def run(self, args):
         if not args:

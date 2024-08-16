@@ -80,7 +80,7 @@ print_color "${GREEN}" "Copied dj.py to ~/bin/dj and made it executable."
 # Check if RC_FILE exists, create if it doesn't
 touch "$RC_FILE"
 
-# Check if PATH already includes ~/bin
+# Check if PATH already includes ~/bin, add if it doesn't
 if ! grep -q 'export PATH="$HOME/bin:$PATH"' "$RC_FILE"; then
     echo '' >> "$RC_FILE"
     echo '# Add ~/bin to PATH for dj script' >> "$RC_FILE"
@@ -88,8 +88,10 @@ if ! grep -q 'export PATH="$HOME/bin:$PATH"' "$RC_FILE"; then
     print_color "${GREEN}" "Added ~/bin to PATH in $RC_FILE"
 fi
 
-# Add or update dj function in RC_FILE
-sed -i.bak '/^dj() {/,/^}/d' "$RC_FILE"
+# Remove existing dj function and related comments
+sed -i.bak '/# Directory Jump function/,/^}/d' "$RC_FILE"
+
+# Add new dj function
 echo '' >> "$RC_FILE"
 echo '# Directory Jump function' >> "$RC_FILE"
 echo 'dj() {
@@ -97,8 +99,9 @@ echo 'dj() {
         ~/bin/dj
     else
         result=$(~/bin/dj "$@")
-        if [[ $result == DJCHANGEDIR:* ]]; then
-            dir="${result#DJCHANGEDIR:}"
+        if [[ $result == *"DJCHANGEDIR:"* ]]; then
+            dir=$(echo "$result" | grep "DJCHANGEDIR:" | tail -n1 | sed "s/DJCHANGEDIR://")
+            echo "$result" | grep -v "DJCHANGEDIR:"
             cd "$dir"
         else
             echo "$result"
@@ -106,7 +109,10 @@ echo 'dj() {
     fi
 }' >> "$RC_FILE"
 
-print_color "${GREEN}" "Added dj function to $RC_FILE"
+print_color "${GREEN}" "Updated dj function in $RC_FILE"
+
+# Remove empty lines at the end of the file
+sed -i.bak -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$RC_FILE"
 
 # Source RC_FILE to apply changes immediately
 source "$RC_FILE"
