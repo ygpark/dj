@@ -1,54 +1,77 @@
-# Directory Jump
+# Directory Jump (dj)
 
-Use The `Directory Jump` script to save your time to change directory.
-DJ is available for `Linux`, `OS X`
+Directory Jump (dj) is a command-line utility that allows you to quickly navigate between directories in your terminal. It maintains a list of your frequently used directories, enabling you to jump to them with simple commands.
 
-# Introduction Video
+## Features
 
-[![Introduction video](http://img.youtube.com/vi/O5K86e7ymjQ/0.jpg)](http://www.youtube.com/watch?v=O5K86e7ymjQ)
+- Add directories to your jump list
+- Remove directories from your jump list
+- Jump to directories using index numbers
+- Navigate to the next or previous directory in the list
+- Save and load directory lists
+- Clean the directory list
 
-# Usage
+## Installation
 
-````
-Usage: 
-    dj                 : print directories
-    dj [index]         : change directory by index
-    dj add             : add current directory
-    dj add [dir]       : add directory
-    dj rm              : remove current directory
-    dj rm [index]      : remove directory by index
-    dj save <filename> : save dir list into the file
-    dj load <filename> : load dir list from the file
-    dj clean           : clean the stack
-    dj help            : print usage
+1. Clone this repository:
 
-Key Map (normal):
-    CTRL + Up Arrow       : move previous
-    CTRL + Down Arrow     : move next
-    CTRL + Left Arrow     : jump down
-    CTRL + Right Arrow    : jump up
+   ```
+   git clone https://github.com/ygpark/dj.git
+   cd dj
+   ```
 
-Key Map (putty + screen):
-    ALT + Up Arrow       : move previous
-    ALT + Down Arrow     : move next
-    ALT + Left Arrow     : jump down
-    ALT + Right Arrow    : jump up
+2. Run the installation script:
 
-Key Map (mac os):
-    ESC + Up Arrow       : move previous
-    ESC + Down Arrow     : move next
-    ESC + Left Arrow     : jump down
-    ESC + Right Arrow    : jump up
-````
+   ```
+   ./install.sh
+   ```
 
-# Installation
+3. Restart your terminal or run `source ~/.zshrc` (or `~/.bashrc` for Bash users) to apply the changes.
 
-the easiest way to install `dj` is to use our `automatic installer`
-by simply coping and pasting the following line into a terminal.
+## Usage
 
-````
-git clone https://github.com/ygpark/dj
-cd dj
-./bootstrap.sh
-````
+- `dj`: Display the list of saved directories
+- `dj [index]`: Jump to the directory at the specified index
+- `dj add`: Add the current directory to the list
+- `dj add [dir]`: Add the specified directory to the list
+- `dj rm`: Remove the current directory from the list
+- `dj rm [index]`: Remove the directory at the specified index from the list
+- `dj next`: Jump to the next directory in the list
+- `dj prev`: Jump to the previous directory in the list
+- `dj save <filename>`: Save the current directory list to a file
+- `dj load <filename>`: Load a directory list from a file
+- `dj clean`: Clear the entire directory list
+- `dj help`: Display usage information
 
+## Examples
+
+1. Add the current directory to the list:
+
+   ```
+   dj add
+   ```
+
+2. Jump to the third directory in the list:
+
+   ```
+   dj 3
+   ```
+
+3. Move to the next directory in the list:
+
+   ```
+   dj next
+   ```
+
+4. Save your current directory list:
+   ```
+   dj save my_dirs.txt
+   ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
